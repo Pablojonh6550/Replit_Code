@@ -55,9 +55,11 @@ void exibirDados(Bolsa empresas,double variacao) {
 }
 
 int main() {
-  Bolsa empresas;
+  int tam = 4;
+  Bolsa empresas[tam];
   double variacao;
   int cont = 0;
+  int contl = 0;
   bool check = false;
 
   do{
@@ -73,7 +75,7 @@ int main() {
     
     switch(cont) {
       case 1:
-        empresas = cadastrarEmpresa();
+        empresas[0] = cadastrarEmpresa();
         system("clear");
         check = true;
         cont = 0;
@@ -81,16 +83,17 @@ int main() {
       break;
       case 2:
         if(check == true){
-          variacao = calcularVariacao(empresas);
-          exibirDados(empresas, variacao);
-  
+          
+          variacao = calcularVariacao(empresas[0]);
+          exibirDados(empresas[0], variacao);
+          
           printf("\n0 - Voltar ");
           scanf("%d", &cont);
           setbuf(stdin, NULL);
           system("clear");
           }else{
           
-            printf("Não a dados cadastrodos! \n\n");
+            printf("Não a dados cadastrados! \n\n");
             printf("0 - Voltar ");
             scanf("%d", &cont);
             setbuf(stdin, NULL);
@@ -99,11 +102,61 @@ int main() {
       
       break;
       case 3:
-        printf("Nada </3. \n");
-        printf("0 - Voltar ");
-        scanf("%d", &cont);
-        setbuf(stdin, NULL);
-        system("clear");
+        do{
+          
+          printf("\n---| Menu Laços|---\n");
+          printf("1 - Cadastrar Empresa\n");
+          printf("2 - Consultar\n");
+          printf("3 - Voltar \n");
+          printf("Digite uma opção: ");
+          scanf("%d", &contl);
+          setbuf(stdin, NULL);
+          system("clear");
+
+          switch(contl){
+            case 1:
+              for(int i = 1; i<tam; i++) {
+                  empresas[i] = cadastrarEmpresa();
+                  system("clear");
+                  check = true;
+                  contl = 0;
+              }
+            break;
+
+            case 2:
+              if(check == true){
+                for(int i = 1; i<tam; i++){
+                  variacao = calcularVariacao(empresas[i]);
+                  exibirDados(empresas[i], variacao);
+                }
+                printf("\n0 - Voltar ");
+                scanf("%d", &contl);
+                setbuf(stdin, NULL);
+                system("clear");
+              }else{
+          
+                printf("Não a dados cadastrados! \n\n");
+                printf("0 - Voltar ");
+                scanf("%d", &contl);
+                setbuf(stdin, NULL);
+                system("clear");
+              } 
+            break;
+
+            case 3:
+              cont = 0;
+              contl = 3;
+            break;
+            
+            default:
+              printf("Digite uma opção válida!");
+              sleep(1);      
+              contl = 0;
+              system("clear");
+
+          }
+        }while(contl == 0 && contl != 3);
+        
       break;
 
       default:
